@@ -15,7 +15,8 @@ const defaults = {
 	ignoreJsonErrors: false,
 	eol: ';',
 	pre: '$',
-	propAssign: ': '
+	propAssign: ': ',
+	quoteVars: true
 };
 
 let settings;
@@ -55,6 +56,9 @@ const buildVariablesRecursive = function(obj, path, cb) {
 					buildVariablesRecursive(val, path + key + settings.delim, cb);
 				}
 			} else {
+				if(settings.quoteVars) {
+					val = '"' + val + '"';
+				}
 				cb(settings.pre + path + key + ': ' + val + settings.eol);
 			}
 		}
